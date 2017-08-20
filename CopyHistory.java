@@ -46,7 +46,7 @@ public class CopyHistory {
     public static String getClipText(){
         String clipContent = "";
         Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Transferable content = cb.getContents(null); // always put null in it =D
+        Transferable content = cb.getContents(null);
         if(content != null && content.isDataFlavorSupported(DataFlavor.stringFlavor)){
             try{
                 clipContent = String.valueOf(content.getTransferData(DataFlavor.stringFlavor));
@@ -68,16 +68,16 @@ public class CopyHistory {
                 String text = getClipText();
                 time = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(Calendar.getInstance().getTime());
                 if(!copies.contains(text)){
-                    //System.out.println(text);// for debugging only
+                    
                     copies.add(text);
-                    writer = new PrintWriter(new BufferedWriter(new FileWriter(file, true))); // True means that we want to append to the file
+                    writer = new PrintWriter(new BufferedWriter(new FileWriter(file, true))); 
                     writer.println(time+" | "+text);
                     Thread.sleep(30000);
                 }
                 // clear the list every 100 copies
                 if(copies.size() >= 100){
                     String lastCopied = copies.get(copies.size()-1); // get the last element in the arraylist
-                    copies.clear(); // clear the list
+                    copies.clear();
                     copies.add(lastCopied); // add the last element in the list to avoid duplicates
                     //throw new IllegalArgumentException("ohhh snap!"); // test of the log by throwing an exception ;)
                 }
@@ -91,7 +91,7 @@ public class CopyHistory {
                     Logger.getLogger(ClipboardWatcher.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }finally{
-                writer.close(); // close the file once we are done writing in it
+                writer.close();
             }
             i++;
         }
